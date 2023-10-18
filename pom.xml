@@ -5,12 +5,12 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.intuit.graphql</groupId>
-  <artifactId>graphql-filter-java</artifactId>
+  <artifactId>graphql-filter-jakarta</artifactId>
   <version>1.0.0-SNAPSHOT</version>
 
   <name>${project.artifactId}</name>
   <description>A java library to transform graphql filter into database filter</description>
-  <url>https://github.com/intuit/graphql-filter-java</url>
+  <url>https://github.com/Harlekin06/graphql-filter-jakarta</url>
 
   <licenses>
     <license>
@@ -23,8 +23,8 @@
 
   <scm>
     <url>https://github.com/intuit/graphql-filter-java</url>
-    <connection>scm:git:git://github.com/intuit/graphql-filter-java.git</connection>
-    <developerConnection>scm:git:git@github.com:intuit/graphql-filter-java.git</developerConnection>
+    <connection>scm:git:git://github.com/Harlekin06/graphql-filter-jakarta.git</connection>
+    <developerConnection>scm:git:git@github.com:Harlekin06/graphql-filter-jakarta.git</developerConnection>
   </scm>
 
   <developers>
@@ -38,12 +38,12 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
-    <graphql.version>14.0</graphql.version>
-    <graphql.scalar.version>1.0</graphql.scalar.version>
-    <spring.data.version>2.1.8.RELEASE</spring.data.version>
-    <jpa.version>2.2</jpa.version>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+    <graphql.version>20.2</graphql.version>
+    <graphql.scalar.version>20.2</graphql.scalar.version>
+    <spring.data.version>3.1.2</spring.data.version>
+    <jpa.version>3.1.2</jpa.version>
     <junit.version>4.13.1</junit.version>
   </properties>
 
@@ -91,9 +91,9 @@
     </dependency>
 
     <dependency>
-      <groupId>javax.persistence</groupId>
-      <artifactId>javax.persistence-api</artifactId>
-      <version>${jpa.version}</version>
+      <groupId>jakarta.persistence</groupId>
+      <artifactId>jakarta.persistence-api</artifactId>
+      <version>3.1.0</version>
     </dependency>
 
   </dependencies>
@@ -147,14 +147,14 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
-          <source>8</source>
-          <target>8</target>
+          <source>17</source>
+          <target>17</target>
         </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
-        <version>2.2.1</version>
+        <version>3.2.0</version>
         <executions>
           <execution>
             <id>attach-sources</id>
@@ -168,6 +168,9 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
         <version>2.9.1</version>
+        <configuration>
+        	<javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
+    	</configuration>
         <executions>
           <execution>
             <id>attach-javadocs</id>
