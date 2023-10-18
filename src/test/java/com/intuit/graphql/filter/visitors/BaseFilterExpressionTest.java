@@ -15,57 +15,60 @@
  */
 package com.intuit.graphql.filter.visitors;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.stream.Collectors;
+
+import org.junit.Before;
+
 import com.intuit.graphql.filter.common.EmployeeDataFetcher;
+
 import graphql.GraphQL;
 import graphql.schema.GraphQLSchema;
 import graphql.schema.idl.RuntimeWiring;
 import graphql.schema.idl.SchemaGenerator;
 import graphql.schema.idl.SchemaParser;
 import graphql.schema.idl.TypeDefinitionRegistry;
-import org.junit.Before;
-
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.stream.Collectors;
-
 
 /**
  * @author sjaiswal
  */
 public abstract class BaseFilterExpressionTest {
 
-    private GraphQL graphQL;
-    private EmployeeDataFetcher employeeDataFetcher;
+	private GraphQL graphQL;
+	private EmployeeDataFetcher employeeDataFetcher;
 
-    @Before
-    public void init() throws IOException {
+	private GraphQLSchema buildSchema(final String sdl) {
+		final TypeDefinitionRegistry typeRegistry = new SchemaParser().parse(sdl);
+		final RuntimeWiring runtimeWiring = buildWiring();
+		final SchemaGenerator schemaGenerator = new SchemaGenerator();
+		return schemaGenerator.makeExecutableSchema(typeRegistry, runtimeWiring);
+	}
 
-        employeeDataFetcher = new EmployeeDataFetcher();
+	protected abstract RuntimeWiring buildWiring();
 
-        String filePath = getClass().getClassLoader().getResource("schema.graphql").getPath();
-        String sdl = Files.lines(Paths.get(filePath), StandardCharsets.UTF_8).
-                collect(Collectors.joining(System.lineSeparator()));
+	public EmployeeDataFetcher getEmployeeDataFetcher() {
+		return employeeDataFetcher;
+	}
 
-        GraphQLSchema graphQLSchema = buildSchema(sdl);
-        this.graphQL = GraphQL.newGraphQL(graphQLSchema).build();
-    }
+	public GraphQL getGraphQL() {
+		return graphQL;
+	}
 
-    private GraphQLSchema buildSchema(String sdl){
-        TypeDefinitionRegistry typeRegistry = new SchemaParser().parse(sdl);
-        RuntimeWiring runtimeWiring = buildWiring();
-        SchemaGenerator schemaGenerator = new SchemaGenerator();
-        return schemaGenerator.makeExecutableSchema(typeRegistry, runtimeWiring);
-    }
+	@Before
+	public void init() throws IOException, URISyntaxException {
 
-    protected abstract RuntimeWiring buildWiring();
+		employeeDataFetcher = new EmployeeDataFetcher();
 
-    public GraphQL getGraphQL() {
-        return graphQL;
-    }
+		final URI filePath = getClass().getClassLoader().getResource("schema.graphql").toURI();
+		final String sdl = Files.lines(Paths.get(filePath), StandardCharsets.UTF_8)
+				.collect(Collectors.joining(System.lineSeparator()));
 
-    public EmployeeDataFetcher getEmployeeDataFetcher() {
-        return employeeDataFetcher;
-    }
+		final GraphQLSchema graphQLSchema = buildSchema(sdl);
+		graphQL = GraphQL.newGraphQL(graphQLSchema).build();
+	}
 }
