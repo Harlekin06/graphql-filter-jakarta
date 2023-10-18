@@ -4,11 +4,11 @@
 [![Apache 2](http://img.shields.io/badge/license-Apache%202-brightgreen.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
 ## Overview
-This library helps GraphQL developers build awesome APIs with fine grain filtering support.
+This library helps GraphQL developers build awesome APIs with fine grain filtering support. This is a Fork for Spring 3.
 
 ## Requirements
-* grahql-java (v13.x)
-* Java 8.x & Above
+* grahql-java (v20.x)
+* Java 17.x & Above
 
 ## Features
 This library will help create filter conditions which are dynamically created by combining any supported filter criteria field along with any of the supported logical operations including AND, OR and NOT.  Consider the examples below.
