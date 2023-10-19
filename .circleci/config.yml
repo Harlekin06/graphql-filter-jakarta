@@ -5,9 +5,8 @@ executors:
       - image: 'cimg/openjdk:17.0'
 orbs:
   maven: circleci/maven@01.4.1
-
 workflows:
   maven_test:
     jobs:
-      - maven/test # checkout, build, test, and upload test results
+      - maven/test:
           executor: java17
