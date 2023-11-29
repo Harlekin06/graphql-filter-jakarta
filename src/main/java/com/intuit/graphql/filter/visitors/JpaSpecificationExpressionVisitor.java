@@ -51,7 +51,6 @@ public class JpaSpecificationExpressionVisitor<T> implements ExpressionVisitor<S
 
 	public JpaSpecificationExpressionVisitor(final Map<String, String> fieldMap,
 			final FieldValueTransformer fieldValueTransformer) {
-		System.out.println("JpaSpecificationExpressionVisitor");
 		this.fieldMap = fieldMap;
 		this.fieldStack = new ArrayDeque<>();
 		this.fieldValueTransformer = fieldValueTransformer;
